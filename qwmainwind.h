@@ -6,6 +6,8 @@
 #include    <QProgressBar>
 #include    <QSpinBox>
 #include    <QFontComboBox>
+#include    <QMenu>
+#include    <QAction>
 
 namespace Ui {
 class QWMainWind;
@@ -22,6 +24,9 @@ private:
 
     QSpinBox        *spinFontSize;//   字体大写
     QFontComboBox   *comboFont;//字体名称
+
+    QMenu           *menuHelp;//“帮助”菜单
+    QAction         *actAbout;//“关于”动作，菜单项和工具栏按钮共用
 
 
     void    updateCurFile(QString aFile);//更新当前文件名，并更新状态栏提示
@@ -48,6 +53,7 @@ private slots:
     void on_txtEdit_copyAvailable(bool b);//有文字可copy时更新cut,copy的Enable状态
 
     void on_actToolbarLab_triggered(bool checked); //设置工具栏按钮样式
+    void on_actAbout_triggered();//“关于”对话框
 //  自定义槽函数
     void on_spinBoxFontSize_valueChanged(int aFontSize);//改变字体大小的SpinBox的响应
     void on_comboFont_currentIndexChanged(const QString &arg1);//FontCombobox的响应，选择字体名称

@@ -5,6 +5,7 @@
 #include    <QFileDialog>
 #include    <QTextStream>
 #include    <QFontDialog>
+#include    <QMessageBox>
 #include    <QCoreApplication>
 #include    <Qlabel>
 #include    <QTextCharFormat>
@@ -48,6 +49,12 @@ void QWMainWind::iniUI()
     ui->mainToolBar->addWidget(comboFont);//添加到工具栏
 
     setCentralWidget(ui->txtEdit); //将txtEdit设置为中心组件，自动填充整个工作区
+
+//“帮助”菜单与“关于”动作
+    menuHelp=ui->menuBar->addMenu("帮助"); //菜单栏上增加“帮助”菜单
+    actAbout=new QAction(QIcon(":/images/images/BLD.BMP"),"关于",this);
+    menuHelp->addAction(actAbout);//“关于”添加到“帮助”菜单
+    ui->mainToolBar->insertAction(ui->actOpen,actAbout); //工具栏上放在“新建”之后
 }
 
 void QWMainWind::iniSignalSlots()
@@ -57,6 +64,9 @@ void QWMainWind::iniSignalSlots()
 
     connect(comboFont,SIGNAL(currentIndexChanged(const QString &)),
             this,SLOT(on_comboFont_currentIndexChanged(const QString &)));
+
+    connect(actAbout,SIGNAL(triggered()),
+            this,SLOT(on_actAbout_triggered()));
 }
 
 QWMainWind::QWMainWind(QWidget *parent) :
@@ -183,4 +193,13 @@ void QWMainWind::on_txtEdit_selectionChanged()
     ui->actFontItalic->setChecked(fmt.fontItalic()); //是否斜体
     ui->actFontBold->setChecked(fmt.font().bold()); //是否粗体
     ui->actFontUnder->setChecked(fmt.fontUnderline()); //是否有下划线
+}
+
+void QWMainWind::on_actAbout_triggered()
+{//“关于”对话框，显示开发人员信息
+    QMessageBox msgBox(this); //无图标的消息框，字体继承自主窗口
+    msgBox.setWindowTitle("samp2_4");
+    msgBox.setText("黄润深 2024414300105");
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.exec();
 }
